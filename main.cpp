@@ -5,6 +5,8 @@
 #include <cstdlib>
 #include <ctime>
 #include <algorithm>
+// #include <chrono>
+#include <iomanip>
 
 #define WORD_FILE_PATH R"(.\wordlist.txt)"
 #define RESULTS_FILE_PATH R"(.\out\results.csv)"
@@ -32,20 +34,24 @@ int main()
         // Open the file with words and
         // save the words with proper length to a vector.
         std::ifstream wordFile;
-        std::ofstream resultFile;
 
         // Default mode (2nd parameter) for ifstream class open method: ios::in
         wordFile.open(WORD_FILE_PATH);
+        if (!wordFile.is_open())
+            throw std::runtime_error("Unable to open input file.");
 
+        // Open the CSV file for game results
+        std::ofstream resultFile;
         bool resultFileExists{static_cast<bool>(std::ifstream(RESULTS_FILE_PATH))};
 
         // Default mode argument (2nd parameter) for ofstream class open method: ios::out
         resultFile.open(RESULTS_FILE_PATH, std::ios::out | std::ios::app);
-
-        if (!wordFile.is_open())
-            throw std::runtime_error("Unable to open input file.");
         if (!resultFile.is_open())
             throw std::runtime_error("Unable to open output file.");
+
+        // If the CSV file has just been created, add proper headings.
+        if (!resultFileExists)
+            resultFile << "current_time" << ";" << "solution" << ";" << "game_result" << ";" << "incorrect_guesses" << ";" << "available_attempts" << std::endl;
 
         std::vector<std::string> availableWords;
 
@@ -195,16 +201,18 @@ int main()
         std::cout << "Game over. Result: " << finalResultTxt << ". Solution: " << soughtWord << std::endl;
 
         // Results CSV export
-        time_t currentTime;
-        time(&currentTime);
-        std::string currentTimeTxt{asctime(localtime(&currentTime))};
+        std::time_t currentTime;
+        std::time(&currentTime);
+        std::tm currentTimeTmStruct = *std::localtime(&currentTime);
+        // std::string currentTimeTxt{asctime(localtime(&currentTime))};
+
         // - remove newline characters from the current time string.
-        currentTimeTxt.erase(std::remove(currentTimeTxt.begin(), currentTimeTxt.end(), '\n'), currentTimeTxt.end());
+        // currentTimeTxt.erase(std::remove(currentTimeTxt.begin(), currentTimeTxt.end(), '\n'), currentTimeTxt.end());
 
-        if (!resultFileExists)
-            resultFile << "current_time" << ";" << "solution" << ";" << "game_result" << ";" << "incorrect_guesses" << ";" << "available_attempts" << std::endl;
+        // std::time_t currentTime = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
 
-        resultFile << currentTimeTxt << ";" << soughtWord << ";" << finalResultTxt << ";" << incorrectGuesses.size() << ";" << AVAILABLE_ATTEMPTS << std::endl;
+        // resultFile << currentTimeTxt << ";" << soughtWord << ";" << finalResultTxt << ";" << incorrectGuesses.size() << ";" << AVAILABLE_ATTEMPTS << std::endl;
+        resultFile << std::put_time(&currentTimeTmStruct, "%Y-%m-%d %H:%M:%S") << ";" << soughtWord << ";" << finalResultTxt << ";" << incorrectGuesses.size() << ";" << AVAILABLE_ATTEMPTS << std::endl;
 
         wordFile.close();
         resultFile.close();
