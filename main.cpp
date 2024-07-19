@@ -4,8 +4,6 @@
 #include <fstream>
 #include <cstdlib>
 #include <ctime>
-#include <algorithm>
-// #include <chrono>
 #include <iomanip>
 
 #define WORD_FILE_PATH R"(.\wordlist.txt)"
@@ -204,14 +202,6 @@ int main()
         std::time_t currentTime;
         std::time(&currentTime);
         std::tm currentTimeTmStruct = *std::localtime(&currentTime);
-        // std::string currentTimeTxt{asctime(localtime(&currentTime))};
-
-        // - remove newline characters from the current time string.
-        // currentTimeTxt.erase(std::remove(currentTimeTxt.begin(), currentTimeTxt.end(), '\n'), currentTimeTxt.end());
-
-        // std::time_t currentTime = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
-
-        // resultFile << currentTimeTxt << ";" << soughtWord << ";" << finalResultTxt << ";" << incorrectGuesses.size() << ";" << AVAILABLE_ATTEMPTS << std::endl;
         resultFile << std::put_time(&currentTimeTmStruct, "%Y-%m-%d %H:%M:%S") << ";" << soughtWord << ";" << finalResultTxt << ";" << incorrectGuesses.size() << ";" << AVAILABLE_ATTEMPTS << std::endl;
 
         wordFile.close();
