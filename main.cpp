@@ -37,6 +37,8 @@ int main()
         // Default mode (2nd parameter) for ifstream class open method: ios::in
         wordFile.open(WORD_FILE_PATH);
 
+        bool resultFileExists{static_cast<bool>(std::ifstream(RESULTS_FILE_PATH))};
+
         // Default mode argument (2nd parameter) for ofstream class open method: ios::out
         resultFile.open(RESULTS_FILE_PATH, std::ios::out | std::ios::app);
 
@@ -198,6 +200,9 @@ int main()
         std::string currentTimeTxt{asctime(localtime(&currentTime))};
         // - remove newline characters from the current time string.
         currentTimeTxt.erase(std::remove(currentTimeTxt.begin(), currentTimeTxt.end(), '\n'), currentTimeTxt.end());
+
+        if (!resultFileExists)
+            resultFile << "current_time" << ";" << "solution" << ";" << "game_result" << ";" << "incorrect_guesses" << ";" << "available_attempts" << std::endl;
 
         resultFile << currentTimeTxt << ";" << soughtWord << ";" << finalResultTxt << ";" << incorrectGuesses.size() << ";" << AVAILABLE_ATTEMPTS << std::endl;
 
