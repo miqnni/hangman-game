@@ -38,7 +38,7 @@ int main()
         if (!wordFile.is_open())
             throw std::runtime_error("Unable to open input file.");
 
-        // Open the CSV file for game results
+        // Open the CSV file for game results.
         std::ofstream resultFile;
         bool resultFileExists{static_cast<bool>(std::ifstream(RESULTS_FILE_PATH))};
 
