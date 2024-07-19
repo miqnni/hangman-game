@@ -4,4 +4,5 @@ A simple hangman game written in C++
 
 ### Features
 
--   Export to CSV
+-   [x] Export to CSV
+-   [ ] GUI
