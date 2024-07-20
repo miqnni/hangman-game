@@ -1,5 +1,9 @@
 A simple hangman game written in C++
 
+# Preview
+
+![Gameplay screenshot](preview/hangman_gui_prototype.png)
+
 # Key Features
 
 -   [x] Export to CSV (in a version before GUI)
