@@ -2,8 +2,15 @@ A simple hangman game written in C++
 
 # Key Features
 
--   [x] Export to CSV
+-   [x] Export to CSV (in a version before GUI)
 -   [ ] GUI
+    -   [x] Working GUI
+    -   [ ] GUI Improvements
+        -   [ ] Put every .h and .cpp file except for main.cpp to a separate "src/model" directory
+        -   [ ] Random word from a .txt file
+        -   [ ] Export game results to a .csv file
+        -   [ ] Display remaining attempts in a different way
+-   [ ] Instant replay
 -   [ ] Main menu with settings
 
 # Sources
