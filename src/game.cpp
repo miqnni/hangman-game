@@ -35,6 +35,10 @@ void Game::update(char userGuess)
 
     // Is the game over?
     checkGameStatus();
+    if (over)
+    {
+        // Results CSV export
+    }
 
     roundNo++;
 }

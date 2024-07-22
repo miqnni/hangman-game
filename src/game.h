@@ -30,4 +30,8 @@ public:
     bool validateGuess(char userGuess);
 
     void checkGameStatus();
+
+    GameResult getResult() { return result; }
+
+    std::vector<char> getIncorrectGuesses() { return incorrectGuesses; }
 };
